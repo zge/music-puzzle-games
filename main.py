@@ -42,6 +42,7 @@ def playMusicPuzzle(save_txt=True, save_csv=True, save_mp3=True):
     ps = np.array(ps)
 
     # calculate pairwise-similarity
+    # tf.reset_default_graph() # needed if running the following block multiple times
     with tf.Session() as sess:
         model = SEN(is_train=False)
         sess.run(tf.global_variables_initializer())
@@ -55,6 +56,7 @@ def playMusicPuzzle(save_txt=True, save_csv=True, save_mp3=True):
                     batch.x2 = [target_fea[j]]
                     batch.y = [[0, 0]]
                     score[i, j] = model.calculate(sess, batch)[0][1]
+    print(score)
 
     # find the best permutation
     output = []
